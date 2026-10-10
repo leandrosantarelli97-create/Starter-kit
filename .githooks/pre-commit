@@ -1,0 +1,36 @@
+#!/bin/sh
+# Rete di sicurezza prima di ogni commit:
+#   1. blocca i file .env (contengono i tuoi segreti)
+#   2. blocca API key, token e chiavi private riconoscibili nel codice
+# Si attiva da solo con `npm install` (script "prepare" nel package.json).
+
+staged_files=$(git diff --cached --name-only --diff-filter=ACM)
+[ -z "$staged_files" ] && exit 0
+
+# --- 1. File .env ---
+env_files=$(echo "$staged_files" | grep -E '(^|/)\.env(\.|$)' | grep -v '\.env\.example$')
+if [ -n "$env_files" ]; then
+  echo "COMMIT BLOCCATO — Stai per committare un file .env:"
+  echo "$env_files" | sed 's/^/  - /'
+  echo ""
+  echo "I file .env contengono i tuoi segreti e non vanno mai su GitHub."
+  echo "Toglili dal commit con: git restore --staged <file>"
+  exit 1
+fi
+
+# --- 2. Segreti riconoscibili nel contenuto ---
+# Pattern delle credenziali usate nel corso (OpenAI, Stripe, Supabase,
+# Brevo, GitHub, chiavi private PEM).
+secret_patterns='sk-[A-Za-z0-9_-]{20,}|sk_(live|test)_[A-Za-z0-9]{10,}|whsec_[A-Za-z0-9]{10,}|sb_secret_[A-Za-z0-9_-]{10,}|xkeysib-[A-Za-z0-9]{10,}|ghp_[A-Za-z0-9]{20,}|github_pat_[A-Za-z0-9_]{20,}|AKIA[0-9A-Z]{16}|-----BEGIN [A-Z ]*PRIVATE KEY-----'
+
+leaks=$(git diff --cached --unified=0 -- . ":(exclude).githooks" | grep -E '^\+' | grep -Ev '^\+\+\+' | grep -En "$secret_patterns")
+if [ -n "$leaks" ]; then
+  echo "COMMIT BLOCCATO — Nel commit c'è qualcosa che assomiglia a una API key o a un segreto:"
+  echo "$leaks" | head -5 | sed 's/^/  /'
+  echo ""
+  echo "I segreti vanno solo in .env.local (che è già ignorato da git),"
+  echo "mai scritti direttamente nel codice. Rimuovili e riprova."
+  exit 1
+fi
+
+exit 0

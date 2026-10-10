@@ -1,0 +1,39 @@
+@import "tailwindcss";
+
+:root {
+  /* La palette dell'app: carta calda, inchiostro, un accento arancione. */
+  --paper: #faf5ec;
+  --ink: #211d19;
+  --ink-soft: #6b6259;
+  --accent: #d94f1e;
+  --line: #e2d9cb;
+  --card: #fffdf8;
+}
+
+@theme inline {
+  --color-paper: var(--paper);
+  --color-ink: var(--ink);
+  --color-ink-soft: var(--ink-soft);
+  --color-accent: var(--accent);
+  --color-line: var(--line);
+  --color-card: var(--card);
+  --font-display: var(--font-display);
+  --font-body: var(--font-body);
+}
+
+body {
+  background-color: var(--paper);
+  /* Trama di puntini appena percettibile, come carta stampata */
+  background-image: radial-gradient(
+    color-mix(in srgb, var(--ink) 7%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 22px 22px;
+  color: var(--ink);
+  font-family: var(--font-body), sans-serif;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--paper);
+}

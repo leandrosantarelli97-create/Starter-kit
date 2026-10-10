@@ -1,0 +1,380 @@
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Sans:ital,wght@0,400..700;1,400..700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+  --paper: #faf9f7;
+  --surface: #ffffff;
+  --ink: #17161a;
+  --ink-soft: #5c5a62;
+  --ink-faint: #8f8c95;
+  --line: #e7e4de;
+  --line-strong: #d5d1c9;
+  --accent: #d9411e;
+  --accent-ink: #a32f10;
+  --accent-soft: #fcefea;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: 'Instrument Sans', system-ui, sans-serif;
+  font-feature-settings: 'ss01' on;
+}
+
+[hidden] {
+  display: none !important;
+}
+
+::selection {
+  background: var(--accent);
+  color: #fff;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Etichetta piccola in mono: usata per metadati, contatori, intestazioni di sezione. */
+.label {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-faint);
+}
+
+/* --- Bottoni --- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 36px;
+  padding: 0 14px;
+  border-radius: 6px;
+  border: 1px solid transparent;
+  font-size: 14px;
+  font-weight: 500;
+  line-height: 1;
+  cursor: pointer;
+  transition: background-color 0.14s ease, border-color 0.14s ease, color 0.14s ease,
+    transform 0.14s ease;
+  white-space: nowrap;
+}
+
+.btn:active {
+  transform: translateY(0.5px);
+}
+
+.btn-primary {
+  background: var(--ink);
+  color: var(--paper);
+}
+
+.btn-primary:hover {
+  background: #000;
+}
+
+.btn-secondary {
+  background: var(--surface);
+  border-color: var(--line-strong);
+  color: var(--ink);
+}
+
+.btn-secondary:hover {
+  background: #f4f2ee;
+}
+
+.btn-accent {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-accent:hover {
+  background: var(--accent-ink);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--ink-soft);
+}
+
+.btn-ghost:hover {
+  background: #f0eee9;
+  color: var(--ink);
+}
+
+.btn-sm {
+  height: 30px;
+  padding: 0 10px;
+  font-size: 13px;
+}
+
+.btn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+/* --- Campi --- */
+.field {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--line-strong);
+  border-radius: 6px;
+  padding: 9px 12px;
+  font-size: 14px;
+  color: var(--ink);
+  transition: border-color 0.14s ease, box-shadow 0.14s ease;
+}
+
+.field::placeholder {
+  color: var(--ink-faint);
+}
+
+.field:focus {
+  outline: none;
+  border-color: var(--ink);
+  box-shadow: 0 0 0 3px rgba(23, 22, 26, 0.07);
+}
+
+.field-error {
+  border-color: var(--accent);
+}
+
+.field-error:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(217, 65, 30, 0.14);
+}
+
+/* --- Chip selezionabile (tone of voice, filtri) --- */
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  height: 30px;
+  padding: 0 12px;
+  border-radius: 999px;
+  border: 1px solid var(--line-strong);
+  background: var(--surface);
+  font-size: 13px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  transition: all 0.14s ease;
+}
+
+.chip:hover {
+  border-color: var(--ink-faint);
+  color: var(--ink);
+}
+
+.chip[aria-pressed='true'] {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--paper);
+}
+
+/* --- Tab di stato --- */
+.tab {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 0 2px 11px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.tab:hover {
+  color: var(--ink);
+}
+
+.tab[aria-selected='true'] {
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.tab[aria-selected='true']::after {
+  content: '';
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: -1px;
+  height: 2px;
+  background: var(--accent);
+}
+
+.tab-count {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  padding: 1px 5px;
+  border-radius: 4px;
+  background: #efece7;
+  color: var(--ink-soft);
+}
+
+/* --- Navigazione laterale --- */
+.nav-item {
+  position: relative;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  height: 34px;
+  padding: 0 10px;
+  border-radius: 6px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-decoration: none;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+.nav-item:hover {
+  background: #f2f0eb;
+  color: var(--ink);
+}
+
+.nav-item[aria-current='page'] {
+  background: #f2f0eb;
+  color: var(--ink);
+  font-weight: 500;
+}
+
+.nav-item[aria-current='page']::before {
+  content: '';
+  position: absolute;
+  left: -11px;
+  top: 7px;
+  bottom: 7px;
+  width: 2px;
+  border-radius: 2px;
+  background: var(--accent);
+}
+
+/* --- Comparsa progressiva al caricamento --- */
+.reveal {
+  animation: reveal 0.5s cubic-bezier(0.22, 1, 0.36, 1) backwards;
+}
+
+@keyframes reveal {
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* --- Skeleton di caricamento --- */
+.skeleton {
+  background: linear-gradient(90deg, #efece7 25%, #f7f5f1 50%, #efece7 75%);
+  background-size: 400% 100%;
+  animation: shimmer 1.4s ease infinite;
+  border-radius: 4px;
+}
+
+@keyframes shimmer {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
+}
+
+/* Cursore lampeggiante mostrato mentre l'AI "scrive". */
+.caret::after {
+  content: '';
+  display: inline-block;
+  width: 7px;
+  height: 15px;
+  margin-left: 2px;
+  background: var(--accent);
+  vertical-align: -2px;
+  animation: blink 1s steps(2) infinite;
+}
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* Trama a puntini per gli sfondi decorativi. */
+.dotted {
+  background-image: radial-gradient(var(--line-strong) 1px, transparent 1px);
+  background-size: 18px 18px;
+}
+
+/* --- Barra degli stati del prototipo (non fa parte del prodotto) --- */
+#proto-states {
+  position: fixed;
+  right: 16px;
+  bottom: 16px;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px;
+  border-radius: 999px;
+  background: var(--ink);
+  box-shadow: var(--tw-shadow, 0 16px 40px -12px rgba(23, 22, 26, 0.4));
+}
+
+#proto-states .proto-state {
+  height: 26px;
+  padding: 0 11px;
+  border-radius: 999px;
+  border: none;
+  background: transparent;
+  color: rgba(250, 249, 247, 0.62);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 11px;
+  cursor: pointer;
+  transition: background-color 0.14s ease, color 0.14s ease;
+}
+
+#proto-states .proto-state:hover {
+  color: #fff;
+}
+
+#proto-states .proto-state[aria-pressed='true'] {
+  background: var(--accent);
+  color: #fff;
+}
+
+#proto-states .proto-label {
+  padding: 0 8px 0 10px;
+  color: rgba(250, 249, 247, 0.4);
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+  font-size: 10px;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+}
+
+/* Da telefono non ci sta su una riga: va a capo invece di uscire dallo schermo. */
+@media (max-width: 640px) {
+  #proto-states {
+    left: 12px;
+    right: 12px;
+    bottom: 12px;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+}
+
+@media print {
+  #proto-states {
+    display: none;
+  }
+}
